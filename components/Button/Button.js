@@ -18,13 +18,13 @@ export default function Button(props) {
 const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
-    backgroundColor: '#DDDDDD',
+    backgroundColor: '#1a508b',
     padding: 15,
     borderRadius: 5,
     margin: 10
   },
   buttonText: {
     fontSize: 20,
-    color: '#000'
+    color: '#fff3e6'
   }
 });
