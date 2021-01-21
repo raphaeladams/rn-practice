@@ -46,19 +46,22 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     padding: 10,
     marginBottom: 40,
-    backgroundColor: '#c1a1d3'
+    backgroundColor: '#c1a1d3',
+    borderRadius: 5
   },
   userContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: '#1a508b',
     padding: 10,
-    marginBottom: 10
+    marginBottom: 10,
+    borderRadius: 5
   },
   avatar: {
     flex: 1,
-    width: 50,
-    margin: 10
+    width: '100%',
+    margin: 10,
+    borderRadius: 5
   },
   userTextContainer: {
     flex: 2,
@@ -66,7 +69,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff3e6',
     alignItems: 'flex-end',
     padding: 10,
-    margin: 10
+    margin: 10,
+    borderRadius: 5
   },
   text: {
     fontSize: 20,

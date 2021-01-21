@@ -1,55 +1,108 @@
-import React from 'react';
-import { StyleSheet, View, Image, Text } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native';
 import Button from '../Button/Button';
 
 
 const DATA = [
   {
-    id: '1',
-    content: 'first',
+    uri: 'https://i.imgur.com/TkIrScD.png',
+    content: 'The quick brown fox jumped over the lazy dog.',
     date: 'Aug 1 1995',
     user: {
       name: 'Peter Griffin',
+      email: 'peter@example.com'
+    }
+  },
+  {
+    uri: 'https://i.imgur.com/Bf5fz0V.jpeg',
+    content: 'I don\'t know which is more discouraging, literature or chickens.',
+    date: 'Sept 1 1995',
+    user: {
+      name: 'Lois Griffin',
+      email: 'peter@example.com'
+    }
+  },
+  {
+    uri: 'https://i.imgur.com/oPJpfbB.png',
+    content: 'Self-respect and a clear conscience are powerful components of integrity and are the basis for enriching your relationships with others.',
+    date: 'Nov 10 2000',
+    user: {
+      name: 'Brian Griffin',
       email: 'peter@example.com'
     }
   }
 ]
 
 export default function Item(props) {
+  const [liked, setLiked] = useState(false);
+  const toggleLiked = () => setLiked(previousState => !previousState)
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const nextImage = () => {
+    if (currentIndex < DATA.length - 1)
+    {
+      setCurrentIndex(currentIndex + 1);
+    }
+  }
+  const prevImage = () => {
+    if (currentIndex > 0)
+    {
+      setCurrentIndex(currentIndex - 1);
+    }
+  }
+
   return (
     <View style={styles.itemViewContainer}>
-      <View style={styles.imageContainer}>
+      <View style={styles.imageSectionContainer}>
         <Image
           style={styles.image}
-          source={{ uri: 'https://i.imgur.com/TkIrScD.png' }}
+          source={{uri: DATA[currentIndex].uri}}
         />
       </View>
+
+      <View style={styles.navButtonSectionContainer}>
+        <View style={styles.navButtonsContainer}>
+          <TouchableOpacity
+            onPress={prevImage}
+            style={styles.navButton}
+          >
+            <Text style={styles.navButtonText}>
+              {'<'}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={nextImage}
+            style={styles.navButton}
+          >
+            <Text style={styles.navButtonText}>
+              {'>'}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
       
-      <View style={styles.postContentContainer}>
+      <View style={styles.postSectionContainer}>
         <View style={styles.textContainer}>
           <Text style={styles.text}>
-            {/* {props.content} */}
-            Content content content content
+            {DATA[currentIndex].content}
           </Text>
         </View>
       </View>
       
-      <View style={styles.bottomContentContainer}>
+      <View style={styles.bottomSectionContainer}>
         <View style={styles.bottomElementsContainer}>
           <View style={styles.textContainer}>
             <Text style={styles.text}>
-              {/* {props.userName} */}
-              Peter Griffin
+              {DATA[currentIndex].user.name}
             </Text>
             <Text style={styles.text}>
-              {/* {props.date} */}
-              Jan 1 2020
+              {DATA[currentIndex].date}
             </Text>
           </View>
 
           <Button
-            onPress={() => {}}
-            btnText={'Like' /*loggedIn ? 'Logout' : 'Login'*/}
+            onPress={toggleLiked}
+            btnText={liked ? 'Unlike' : 'Like'}
           />
         </View>
       </View>
@@ -65,39 +118,57 @@ const styles = StyleSheet.create({
     marginBottom: 40
   },
 
-  imageContainer: {
+  imageSectionContainer: {
     flex: 3,
     alignItems: 'stretch',
-    backgroundColor: '#0d335d'
+    backgroundColor: '#0d335d',
+    marginBottom: 15,
+    resizeMode: 'contain'
   },
   image: {
-    height: 400,
-    marginTop: 50,
-    margin: 10
+    height: '100%'
   },
 
-  postContentContainer: {
+  navButtonSectionContainer: {
+    flex: 0.5
+  },
+  navButtonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  navButton: {
+    alignItems: 'center',
+    width: 35,
+    height: 35,
+    borderRadius: 5
+  },
+  navButtonText: {
+    fontSize: 40,
+    color: '#1a508b'
+  },
+
+  postSectionContainer: {
     flex: 1,
-    alignItems: 'stretch'
+    padding: 10,
+    marginBottom: 10
   },
   textContainer: {
-    backgroundColor: '#fff3e6',
-    padding: 10
+    //backgroundColor: '#fff3e6',
   },
   text: {
     fontSize: 20,
     color: '#0d335d',
   },
 
-  bottomContentContainer: {
-    flex: 1,
+  bottomSectionContainer: {
+    flex: 0.5,
     alignItems: 'stretch',
-    padding: 10,
-    backgroundColor: '#c1a1d3'
+    backgroundColor: '#c1a1d3',
+    borderRadius: 5,
+    padding: 10
   },
   bottomElementsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    margin: 10
   }
 });

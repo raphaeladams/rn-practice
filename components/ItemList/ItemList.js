@@ -87,9 +87,5 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'stretch',
     justifyContent: 'center',
-  },
-  text: {
-    fontSize: 20,
-    color: '#0d335d'
   }
 });

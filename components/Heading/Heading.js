@@ -18,7 +18,8 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     padding: 15,
     marginBottom: 40,
-    backgroundColor: '#c1a1d3'
+    backgroundColor: '#c1a1d3',
+    borderRadius: 5
   },
   text: {
     fontSize: 20,
