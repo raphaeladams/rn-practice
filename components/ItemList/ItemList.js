@@ -61,12 +61,15 @@ const DATA = [
   }
 ];
 
-export default function ItemList() {
+export default function ItemList(props) {
+  const goToItemView = () => props.navigation.navigate('ItemView');
+
   const renderItem = ({ item }) => (
     <Item
       content={item.content}
       userName={item.user.name}
       date={item.date}
+      viewAction={goToItemView}
     />
   );
 
@@ -85,7 +88,9 @@ export default function ItemList() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff3e6',
     alignItems: 'stretch',
-    justifyContent: 'center',
+    padding: 20,
+    justifyContent: 'center'
   }
 });

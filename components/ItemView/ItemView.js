@@ -33,7 +33,7 @@ const DATA = [
   }
 ]
 
-export default function Item(props) {
+export default function ItemView(props) {
   const [liked, setLiked] = useState(false);
   const toggleLiked = () => setLiked(previousState => !previousState)
 
@@ -52,7 +52,7 @@ export default function Item(props) {
   }
 
   return (
-    <View style={styles.itemViewContainer}>
+    <View style={styles.container}>
       <View style={styles.imageSectionContainer}>
         <Image
           style={styles.image}
@@ -111,13 +111,14 @@ export default function Item(props) {
 }
 
 const styles = StyleSheet.create({
-  itemViewContainer: {
+  container: {
     flex: 1,
+    backgroundColor: '#fff3e6',
     alignItems: 'stretch',
-    marginTop: 40,
-    marginBottom: 40
+    padding: 20,
+    justifyContent: 'center'
   },
-
+  
   imageSectionContainer: {
     flex: 3,
     alignItems: 'stretch',

@@ -4,17 +4,19 @@ import Button from '../Button/Button';
 import SwitchContainer from './SwitchContainer';
 import Heading from '../Heading/Heading';
 
-export default function Navigation() {
+export default function Navigation(props) {
+  const goToItemList = () => props.navigation.navigate('ItemList');
+
   return (
     <View style={styles.container}>
-      <Heading text={'This is the main menu. You can enable a lot of awesome stuff here!'} />
+      <Heading text={'This is the Navigation Screen. You can enable a lot of awesome stuff here!'} />
       
       <SwitchContainer text={'Option 1'} />
       <SwitchContainer text={'Option 2'} />
       <SwitchContainer text={'Option 3'} />
       <Button
-        onPress={() => {}} // what should this button do?
-        btnText={'Next'}
+        onPress={goToItemList}
+        btnText={'View Item List'}
       />
     </View>
   );
@@ -23,11 +25,9 @@ export default function Navigation() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff3e6',
     alignItems: 'stretch',
-    justifyContent: 'center',
-  },
-  text: {
-    fontSize: 20,
-    color: '#0d335d'
+    padding: 20,
+    justifyContent: 'center'
   }
 });

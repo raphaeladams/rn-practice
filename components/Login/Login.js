@@ -1,31 +1,20 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { StyleSheet, View, TextInput, Image } from 'react-native';
 import Button from '../Button/Button';
 
-export default function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
+export default function Login(props) {
   const [email, setEmail] = useState('');
-  const [pwd, setPwd] = useState('');
+  const [password, setPassword] = useState('');
+  const { signIn } = useContext(props.context);
 
   let attemptLogin = () => {
-    if (email === '' || pwd === '') {
+    if (email === '' || password === '') {
       alert('Email and password must be filled out');
       return;
-      //setLoggedIn(true);
     } else {
-      // popup message saying welcome!
-      // go to navigation
-      //setLoggedIn(false);
+      signIn({ email, password });
     }
   };
-
-  // let enterApp = () => {
-  //   if (loggedIn) {
-  //     // go to itemList
-  //   } else {
-  //     // go to login screen
-  //   }
-  // };
 
   return (
     <View style={styles.container}>
@@ -36,14 +25,14 @@ export default function App() {
       <TextInput
         style={styles.textBox}
         placeholder={'Email'}
-        onChangeText={(text) => setEmail(text)}
         value={email}
+        onChangeText={setEmail}
       />
       <TextInput
         style={styles.textBox}
         placeholder={'Password'}
-        onChangeText={(text) => setPwd(text)}
-        value={pwd}
+        value={password}
+        onChangeText={setPassword}
       />
       <Button
         onPress={attemptLogin}
@@ -56,7 +45,9 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff3e6',
     alignItems: 'stretch',
+    padding: 20,
     justifyContent: 'center'
   },
   textBox: {

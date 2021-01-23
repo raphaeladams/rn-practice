@@ -5,7 +5,7 @@ import Button from '../Button/Button';
 
 export default function Item(props) {
   const [liked, setLiked] = useState(false);
-  const toggleLiked = () => setLiked(previousState => !previousState)
+  const toggleLiked = () => setLiked(previousState => !previousState);
 
   return (
     <View style={styles.itemContainer}>
@@ -35,6 +35,10 @@ export default function Item(props) {
           onPress={toggleLiked}
           btnText={liked ? 'Unlike' : 'Like'}
         />
+        <Button
+          onPress={props.viewAction}
+          btnText={'View'}
+        />
       </View>
     </View>
   );
@@ -46,8 +50,7 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     padding: 10,
     marginBottom: 40,
-    backgroundColor: '#c1a1d3',
-    borderRadius: 5
+    backgroundColor: '#c1a1d3'
   },
   userContainer: {
     flexDirection: 'row',

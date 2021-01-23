@@ -1,41 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { TouchableOpacity, StyleSheet, View, Text } from 'react-native';
 import Button from '../Button/Button';
 
-export default function Home() {
-  const [loggedIn, setLoggedIn] = useState(false);
 
-  let logInOrOut = () => {
-    if (loggedIn) {
-      // log out
-      setLoggedIn(false);
-    } else {
-      // go to login page
-      setLoggedIn(true);
-    }
-  };
-
-  let enterApp = () => {
-    if (loggedIn) {
-      // go to navigation
-    } else {
-      // go to login screen
-    }
-  };
+export default function Home(props) {
+  const { signOut } = useContext(props.context);
+  const [loggedIn, setLoggedIn] = useState(!props.context.isSignout);
+  
+  const goToNav = () => props.navigation.navigate('Navigation');
+  const goToLogin = () => props.navigation.navigate('Login');
 
   return (
     <View style={styles.container}>
       <TouchableOpacity
-        onPress={enterApp}
+        onPress={loggedIn ? goToNav : goToLogin}
         style={styles.appButton}
       >
         <Text style={styles.appButtonText}>
-          Enter App!
+          APP
         </Text>
       </TouchableOpacity>
       <Button
-        onPress={logInOrOut}
         btnText={loggedIn ? 'Logout' : 'Login'}
+        onPress={loggedIn ? signOut : goToLogin}
       />
     </View>
   );
@@ -44,8 +31,10 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#fff3e6',
+    alignItems: 'stretch',
+    padding: 20,
+    justifyContent: 'center'
   },
   appButton: {
     alignItems: 'center',
