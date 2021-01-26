@@ -1,62 +1,47 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native';
 import Button from '../Button/Button';
+import LoadingScreen from '../LoadingScreen/LoadingScreen';
+import ErrorScreen from '../ErrorScreen/ErrorScreen';
+import { useQuery } from '@apollo/client';
+import POST_QUERY from './PostQuery';
 
 
-const DATA = [
-  {
-    uri: 'https://i.imgur.com/TkIrScD.png',
-    content: 'The quick brown fox jumped over the lazy dog.',
-    date: 'Aug 1 1995',
-    user: {
-      name: 'Peter Griffin',
-      email: 'peter@example.com'
-    }
-  },
-  {
-    uri: 'https://i.imgur.com/Bf5fz0V.jpeg',
-    content: 'I don\'t know which is more discouraging, literature or chickens.',
-    date: 'Sept 1 1995',
-    user: {
-      name: 'Lois Griffin',
-      email: 'peter@example.com'
-    }
-  },
-  {
-    uri: 'https://i.imgur.com/oPJpfbB.png',
-    content: 'Self-respect and a clear conscience are powerful components of integrity and are the basis for enriching your relationships with others.',
-    date: 'Nov 10 2000',
-    user: {
-      name: 'Brian Griffin',
-      email: 'peter@example.com'
-    }
-  }
+const IMAGES = [
+  'https://i.imgur.com/TkIrScD.png',
+  'https://i.imgur.com/Bf5fz0V.jpeg',
+  'https://i.imgur.com/oPJpfbB.png'
 ]
 
-export default function ItemView(props) {
-  const [liked, setLiked] = useState(false);
-  const toggleLiked = () => setLiked(previousState => !previousState)
+export default function PostView({ route }) {
+  const { postId } = route.params;
+  const { loading, error, data } = useQuery(POST_QUERY, { variables: { id: postId } });
 
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [liked, setLiked] = useState(false);
+  const toggleLiked = () => setLiked(previousState => !previousState);
+
+  const [imageIndex, setImageIndex] = useState(0);
+
+  if (loading) return <LoadingScreen />;
+  if (error) {
+    console.log(error);
+    return <ErrorScreen />;
+  }
+  
   const nextImage = () => {
-    if (currentIndex < DATA.length - 1)
-    {
-      setCurrentIndex(currentIndex + 1);
-    }
-  }
+    if (imageIndex < IMAGES.length - 1) setImageIndex(imageIndex + 1);
+  };
+
   const prevImage = () => {
-    if (currentIndex > 0)
-    {
-      setCurrentIndex(currentIndex - 1);
-    }
-  }
+    if (imageIndex > 0) setImageIndex(imageIndex - 1);
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.imageSectionContainer}>
         <Image
           style={styles.image}
-          source={{uri: DATA[currentIndex].uri}}
+          source={{ uri: IMAGES[imageIndex] }}
         />
       </View>
 
@@ -84,7 +69,7 @@ export default function ItemView(props) {
       <View style={styles.postSectionContainer}>
         <View style={styles.textContainer}>
           <Text style={styles.text}>
-            {DATA[currentIndex].content}
+            {data.micropost.content}
           </Text>
         </View>
       </View>
@@ -93,10 +78,10 @@ export default function ItemView(props) {
         <View style={styles.bottomElementsContainer}>
           <View style={styles.textContainer}>
             <Text style={styles.text}>
-              {DATA[currentIndex].user.name}
+              {data.micropost.user.name}
             </Text>
             <Text style={styles.text}>
-              {DATA[currentIndex].date}
+              {data.micropost.updatedAt}
             </Text>
           </View>
 
@@ -152,9 +137,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     marginBottom: 10
-  },
-  textContainer: {
-    //backgroundColor: '#fff3e6',
   },
   text: {
     fontSize: 20,

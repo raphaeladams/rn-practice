@@ -7,19 +7,24 @@ export default function Home(props) {
   const { signOut } = useContext(props.context);
   const [loggedIn, setLoggedIn] = useState(!props.context.isSignout);
   
-  const goToNav = () => props.navigation.navigate('Navigation');
+  const goToNewsfeed = () => props.navigation.navigate('Newsfeed');
+  const goToSettings = () => props.navigation.navigate('Settings');
   const goToLogin = () => props.navigation.navigate('Login');
 
   return (
     <View style={styles.container}>
       <TouchableOpacity
-        onPress={loggedIn ? goToNav : goToLogin}
+        onPress={loggedIn ? goToNewsfeed : goToLogin}
         style={styles.appButton}
       >
         <Text style={styles.appButtonText}>
           APP
         </Text>
       </TouchableOpacity>
+      <Button
+        btnText={'Settings'}
+        onPress={goToSettings}
+      />
       <Button
         btnText={loggedIn ? 'Logout' : 'Login'}
         onPress={loggedIn ? signOut : goToLogin}

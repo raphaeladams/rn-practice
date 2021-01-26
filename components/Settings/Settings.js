@@ -4,19 +4,20 @@ import Button from '../Button/Button';
 import SwitchContainer from './SwitchContainer';
 import Heading from '../Heading/Heading';
 
-export default function Navigation(props) {
-  const goToItemList = () => props.navigation.navigate('ItemList');
+export default function Settings(props) {
+  const goToListOfPosts = () => props.navigation.navigate('Newsfeed');
 
   return (
     <View style={styles.container}>
-      <Heading text={'This is the Navigation Screen. You can enable a lot of awesome stuff here!'} />
-      
+      <Heading
+        text={'Settings'}
+      />
       <SwitchContainer text={'Option 1'} />
       <SwitchContainer text={'Option 2'} />
       <SwitchContainer text={'Option 3'} />
       <Button
-        onPress={goToItemList}
-        btnText={'View Item List'}
+        onPress={goToListOfPosts}
+        btnText={'Newsfeed'}
       />
     </View>
   );

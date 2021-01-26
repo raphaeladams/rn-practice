@@ -33,6 +33,7 @@ export default function Login(props) {
         placeholder={'Password'}
         value={password}
         onChangeText={setPassword}
+        secureTextEntry={true}
       />
       <Button
         onPress={attemptLogin}
@@ -57,7 +58,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     fontSize: 20,
-    margin: 10
+    margin: 10,
+    padding: 10
   },
   logo: {
     height: 250,

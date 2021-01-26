@@ -1,18 +1,25 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Image, Text } from 'react-native';
 import Button from '../Button/Button';
+import gravatar from 'gravatar';
+import { useNavigation } from '@react-navigation/native';
 
 
-export default function Item(props) {
+export default function Post(props) {
   const [liked, setLiked] = useState(false);
   const toggleLiked = () => setLiked(previousState => !previousState);
 
+  const navigation = useNavigation();
+  const goToPostView = () => {
+    navigation.navigate('View Post', { postId: props.id })
+  };
+
   return (
-    <View style={styles.itemContainer}>
+    <View style={styles.postContainer}>
       <View style={styles.userContainer}>
         <Image
           style={styles.avatar}
-          source={{ uri: 'https://i.imgur.com/TkIrScD.png' }}
+          source={{ uri: gravatar.url(props.email, {protocol: 'https'}) }}
         />
         <View style={styles.userTextContainer}>
           <Text style={styles.text}>
@@ -36,7 +43,7 @@ export default function Item(props) {
           btnText={liked ? 'Unlike' : 'Like'}
         />
         <Button
-          onPress={props.viewAction}
+          onPress={goToPostView}
           btnText={'View'}
         />
       </View>
@@ -45,7 +52,7 @@ export default function Item(props) {
 }
 
 const styles = StyleSheet.create({
-  itemContainer: {
+  postContainer: {
     justifyContent: 'space-between',
     alignItems: 'stretch',
     padding: 10,
@@ -64,7 +71,8 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     margin: 10,
-    borderRadius: 5
+    borderRadius: 5,
+    backgroundColor: '#fff3e6'
   },
   userTextContainer: {
     flex: 2,
