@@ -24,8 +24,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     padding: 15,
     marginBottom: 20,
-    borderColor: '#0d335d',
-    borderWidth: 1
+    backgroundColor: 'white',
+    borderRadius: 5
   },
   label: {
     margin: 8,
