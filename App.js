@@ -8,6 +8,7 @@ import ListOfPostsScreen from './components/ListOfPosts/ListOfPosts';
 import PostViewScreen from './components/PostView/PostView';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
+import {createStackNavigator} from 'react-navigation-stack';
 
 
 export const AuthContext = createContext();
@@ -18,7 +19,7 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 });
 
-export default function App({ navigation }) {
+export default function App() {
   const [state, dispatch] = useReducer((prevState, action) => {
     switch (action.type) {
       case 'RESTORE_TOKEN':
@@ -54,7 +55,7 @@ export default function App({ navigation }) {
       try {
         userToken = await AsyncStorage.getItem('userToken');
       } catch (e) {
-        // restoring the token failed
+        console.log('Failed to restore authentication token');
       }
 
       dispatch({ type: 'RESTORE_TOKEN', token: userToken });
@@ -64,9 +65,26 @@ export default function App({ navigation }) {
 
   const authContext = useMemo(() => ({
     signIn: async (data) => {
-      dispatch({ type: 'SIGN_IN', token: 'an-auth-token' });
+      // In a production app, we need to send some data (usually username, password) to server and get a token
+      // We will also need to handle errors if sign in failed
+      // After getting token, we need to persist the token using `AsyncStorage`
+      // In the example, we'll use a dummy token
+
+      try {
+        await AsyncStorage.setItem('userToken', 'this is the token')
+      } catch (e) {
+        console.log('Error setting authentication token');
+      }
+      dispatch({ type: 'SIGN_IN', token: 'userToken' });
     },
-    signOut: () => dispatch({ type: 'SIGN_OUT' }),
+    signOut: async () => {
+      try {
+        await AsyncStorage.removeItem('userToken');
+      } catch (e) {
+        console.log('Failed to remove authentication token');
+      }
+      dispatch({ type: 'SIGN_OUT' });
+    },
   }), []);
 
   return (
